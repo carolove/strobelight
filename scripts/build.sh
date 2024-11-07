@@ -109,11 +109,20 @@ get_required_libs() {
             elfutils-libelf \
             elfutils-libelf-devel\
             fmt-devel
-    else
+    elif [ -x "$(command -v apt)" ]; then
+       sudo apt install \
+            clang \
+            git \
+            libelf-dev \
+            libfmt-dev
+    elif [ -x "$(command -v yum)" ]; then
         sudo yum install -y \
             git \
             elfutils-libelf-devel \
             fmt-devel
+    else
+        echo -e "${COLOR_RED}Unsupported package manager${COLOR_OFF}"
+        exit 1
     fi
 }
 
